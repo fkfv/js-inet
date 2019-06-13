@@ -51,7 +51,7 @@ const pton4 = function (addr: string): Buffer|null {
   }
 
   return ipBuffer;
-}
+};
 
 const pton = function (addr: string): Buffer|null {
   let ipBuffer = Buffer.alloc(ADDR6SIZE)
@@ -156,9 +156,9 @@ const pton = function (addr: string): Buffer|null {
   }
 
   return ipBuffer;
-}
+};
 
 export {
   pton4,
   pton
-}
+};
