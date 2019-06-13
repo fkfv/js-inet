@@ -31,12 +31,16 @@ inet.pton('256.0.0.1')                 // = null
 inet.pton('::1').toString('hex')       // = 00000000000000000000000000000001
 
 /**
- * ntoa converts a network byte order binary form IP address into
+ * ntop, ntop4 converts a network byte order binary form IP address into
  * presentation form.
+ *
+ * The ntop4 function will only work on IPv4 addresses, while ntop function
+ * will work on both.
  */
-function ntoa(addr: Buffer):? string;
+function ntop4(addr: Buffer): string|null;
+function ntop(addr: Buffer): string|null;
 
-inet.ntoa(Buffer.fromString('7F000001', 'hex')) // = 127.0.0.1
+inet.ntop(Buffer.fromString('7F000001', 'hex')) // = 127.0.0.1
 
 ```
 
