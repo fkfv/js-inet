@@ -1,6 +1,10 @@
 {
   "name": "js-inet",
+  "description": "inet-aton, inet-ntoa implementations in javascript",
   "version": "0.1.0",
   "author": "fkfv",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.0.8"
+  }
 }
