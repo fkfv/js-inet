@@ -11,25 +11,18 @@ specifically the IPv6 functions `inet_pton6()` and `inet_ntop6()`.
 import * as inet from 'js-inet'
 
 /**
- * pton, aton converts a presentation format IP address to binary form,
+ * pton, pton4 converts a presentation format IP address to binary form,
  * in network byte order.
  *
- * The signature for both functions is very similar, the only difference is the
- * return type. The pton function will return `null` on error, while the aton
- * function will return -1 on error. This difference is important, as -1
- * will be interpreted as the IPv4 address 255.255.255.255
+ * The pton4 function will only work on IPv4 addresses, while pton function
+ * will work on both.
  */
-function pton(addr: string):? Buffer;
-function aton(addr: string): Buffer;
+function pton4(addr: string): Buffer|null;
+function pton(addr: string): Buffer|null;
 
-inet.pton('127.0.0.1').toString('hex') // = 7F000001
-inet.pton('256.0.0.1')                 // = null
+inet.pton4('127.0.0.1').toString('hex') // = 7F000001
+inet.pton4('256.0.0.1')                 // = null
 inet.pton('::1').toString('hex')       // = 00000000000000000000000000000001
-
-inet.aton('127.0.0.1').toString('hex') // = 7F000001
-inet.aton('256.0.0.1').toString('hex') // = FFFFFFFF
-inet.aton('::1').toString('hex')       // = 00000000000000000000000000000001
-inet.aton('g000::').toString('hex')    // = FFFFFFFF
 
 /**
  * ntoa converts a network byte order binary form IP address into
