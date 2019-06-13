@@ -1,6 +1,10 @@
 # js-inet
 > inet-aton, inet-ntoa implementations in javascript
 
+## Installation
+Available on the npm public registry
+`npm install js-inet` `yarn add js-inet`
+
 ## Notes
 This implementation is written in pure TypeScript, and transpiled to JavaScript
 for distribution. The implementation is based on that found in FreeBSD, 
@@ -9,6 +13,8 @@ specifically the IPv6 functions `inet_pton6()` and `inet_ntop6()`.
 ## Examples
 ```typescript
 import * as inet from 'js-inet'
+import {pton4, pton} from 'js-inet/aton'
+import {ntop4, ntop} from 'js-inet/ntoa'
 
 /**
  * pton, pton4 converts a presentation format IP address to binary form,
@@ -20,8 +26,8 @@ import * as inet from 'js-inet'
 function pton4(addr: string): Buffer|null;
 function pton(addr: string): Buffer|null;
 
-inet.pton4('127.0.0.1').toString('hex') // = 7F000001
-inet.pton4('256.0.0.1')                 // = null
+inet.pton('127.0.0.1').toString('hex') // = 7F000001
+inet.pton('256.0.0.1')                 // = null
 inet.pton('::1').toString('hex')       // = 00000000000000000000000000000001
 
 /**
