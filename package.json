@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "author": "fkfv",
   "license": "ISC",
+  "repository": "https://github.com/fkfv/js-inet.git",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
