@@ -1,7 +1,7 @@
 {
   "name": "js-inet",
   "description": "inet-aton, inet-ntoa implementations in javascript",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "fkfv",
   "license": "ISC",
   "repository": "https://github.com/fkfv/js-inet.git",
