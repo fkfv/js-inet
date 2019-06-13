@@ -1,2 +1,2 @@
-export {pton, pton as aton} from './aton'
-export {ntop, ntop as ntoa} from './ntoa'
+export {pton, pton as aton} from './pton'
+export {ntop, ntop as ntoa} from './ntop'

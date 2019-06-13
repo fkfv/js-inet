@@ -13,8 +13,8 @@ specifically the IPv6 functions `inet_pton6()` and `inet_ntop6()`.
 ## Examples
 ```typescript
 import * as inet from 'js-inet'
-import {pton4, pton} from 'js-inet/aton'
-import {ntop4, ntop} from 'js-inet/ntoa'
+import {pton4, pton} from 'js-inet/pton'
+import {ntop4, ntop} from 'js-inet/ntop'
 
 /**
  * pton, pton4 converts a presentation format IP address to binary form,
