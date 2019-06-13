@@ -53,6 +53,112 @@ const pton4 = function (addr: string): Buffer|null {
   return ipBuffer;
 }
 
+const pton = function (addr: string): Buffer|null {
+  let ipBuffer = Buffer.alloc(ADDR6SIZE)
+  let bufferIndex = 0
+  let val = 0
+  let seenHex = 0
+  let current = addr
+  let colonPointer = null
+
+  if (addr.length === 0) {
+    return null;
+  }
+
+  if (addr[0] === ':') {
+    if (addr[1] !== ':') {
+      return null;
+    }
+
+    addr = addr.slice(1)
+  }
+
+  while (addr.length !== 0) {
+    let ch = addr[0];
+    let pch = HEXDIGITS.indexOf(ch.toLowerCase());
+
+    addr = addr.slice(1);
+
+    if (pch !== -1) {
+      val <<= 4;
+      val |= pch;
+
+      if (++seenHex > 4) {
+        return null;
+      }
+
+      continue;
+    }
+
+    if (ch === ':') {
+      current = addr;
+
+      if (!seenHex) {
+        if (colonPointer) {
+          return null;
+        }
+
+        colonPointer = bufferIndex;
+        continue;
+      } else if (addr.length === 0) {
+        return null;
+      }
+
+      if (bufferIndex + 2 > ADDR6SIZE) {
+        return null;
+      }
+
+      ipBuffer.writeUInt8((val >> 8) & 0xff, bufferIndex++);
+      ipBuffer.writeUInt8(val & 0xff, bufferIndex++);
+      seenHex = 0;
+      val = 0;
+
+      continue;
+    }
+
+    if (ch === '.' && (bufferIndex + ADDR4SIZE) <= ADDR6SIZE) {
+      const ipv4 = pton4(current);
+
+      if (ipv4 !== null) {
+        return ipv4;
+      }
+    }
+
+    return null;
+  }
+
+  if (seenHex) {
+    if (bufferIndex + 2 > ADDR6SIZE) {
+      return null;
+    }
+
+    ipBuffer.writeUInt8((val >> 8) & 0xff, bufferIndex++);
+    ipBuffer.writeUInt8(val & 0xff, bufferIndex++);
+  }
+
+  if (colonPointer !== null) {
+    if (bufferIndex === ADDR6SIZE) {
+      return null;
+    }
+
+    const startIndex = bufferIndex - colonPointer;
+
+    for (let i = 1; i <= startIndex; i++) {
+      ipBuffer[ipBuffer.length - i] = ipBuffer[colonPointer + startIndex - i];
+      ipBuffer[colonPointer + startIndex - i] = 0;
+    }
+
+    bufferIndex = ADDR6SIZE;
+  }
+
+  if (bufferIndex !== ADDR6SIZE) {
+    return null;
+  }
+
+  return ipBuffer;
+}
+
 export {
-  pton4
+  pton4,
+  pton
 }
