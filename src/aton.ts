@@ -144,8 +144,8 @@ const pton = function (addr: string): Buffer|null {
     const startIndex = bufferIndex - colonPointer;
 
     for (let i = 1; i <= startIndex; i++) {
-      ipBuffer[ipBuffer.length - i] = ipBuffer[colonPointer + startIndex - i];
-      ipBuffer[colonPointer + startIndex - i] = 0;
+      ipBuffer.writeUInt8(ipBuffer.readUInt8(colonPointer + startIndex - i), ipBuffer.length - i);
+      ipBuffer.writeUInt8(0, colonPointer + startIndex - i);
     }
 
     bufferIndex = ADDR6SIZE;
